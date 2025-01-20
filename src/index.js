@@ -1,36 +1,17 @@
 const express = require("express")
 const { dbConnect } = require("./config/database")
-const { UserModel } = require("./models/userModel")
 const dotenv = require("dotenv")
+const { authRouter } = require("./route/authRouter")
+
 dotenv.config()
 
 const app = express()
+app.use(express.json())
 
-app.post("/insertUser",async(req,res)=>{
-    try{
-    const obj = {
-        firstName:"Adit",
-        lastName:"Kakkar23",
-        age:112
-    }
-    const user = new UserModel(obj)
-    await user.save()
-    res.send("user added successfully")
-    }catch(err){
-        res.status(500).send("Error at inserting data")
-    }
-
-})
+app.use("/auth",authRouter)
 
 app.use("/health",(req,res)=>{
     res.send("Backend is working")
-})
-
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        console.log(err.message)
-        res.status(500).send("something went wrong")
-    }
 })
 
 dbConnect().then(()=>{
