@@ -1,4 +1,6 @@
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const UserSchema = new mongoose.Schema({
     firstName : {
@@ -6,13 +8,15 @@ const UserSchema = new mongoose.Schema({
         required : true,
         trim : true,
         minLength : 3,
-        maxLength : 25
+        maxLength : 25,
+        lowercase : true
     },
     lastName : {
         type : String,
         trim : true,
         minLength : 3,
-        maxLength : 25
+        maxLength : 25,
+        lowercase : true
     },
     email : {
         type : String,
@@ -27,7 +31,7 @@ const UserSchema = new mongoose.Schema({
         type : String,
         required : true,
         minLength : 8,
-        maxLength : 25
+        maxLength : 250
     },
     gender :{
         type : String,
@@ -46,10 +50,11 @@ const UserSchema = new mongoose.Schema({
         type : String,
         trim : true,
         maxLength : 40,
+        lowercase : true
     },
     about : {
         type : String,
-        maxLength : 400,
+        maxLength : 400
     },
     photo : {
         type : String,
@@ -60,11 +65,28 @@ const UserSchema = new mongoose.Schema({
     skills : {
         type : [String],
         maxLength : 800,
+        lowercase : true
     }
 
 },{
     timestamps: true
 })
+
+UserSchema.methods.verifyPassword = async function(userInputPassword){
+    const user = this
+    return await bcrypt.compare(userInputPassword,user.password) // left->my normal pass||right-> my hash password
+}
+
+UserSchema.methods.getJWT = async function( user_id ){
+    return await jwt.sign({ user_id: user_id }, process.env.JWT_SECRET_KEY,{expiresIn: process.env.JWT_TOKEN_EXPIRATION_TIME});
+}
+
+// just for knowledge purpose
+// UserSchema.method('verifyPassword',async function(userInputPassword){
+//     const user = this
+//     const isValidPassword = await bcrypt.compare(userInputPassword,user.password)
+//     return isValidPassword
+// })
 
 const UserModel = mongoose.model("user",UserSchema)
 

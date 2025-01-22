@@ -16,7 +16,8 @@ const signUpSchema = z.object({
         lastName: z.string().min(3,{message:"Last name minimum length should be 3!"}).max(25,{message:"Last name maximum length could be 25!"}).optional()
     }).strict(),
     params: z.object({}).strict(),
-    query: z.object({}).strict()
+    query: z.object({}).strict(),
+    cookies: z.object({}).strict()
 });
 
 const logInSchema = z.object({
@@ -25,13 +26,15 @@ const logInSchema = z.object({
         password: z.string().min(8,{message:"Password minimum length should be 8!"}).max(25,{message:"Password maximum characters could be 25"})
     }).strict(),
     params: z.object({}).strict(),
-    query: z.object({}).strict()
+    query: z.object({}).strict(),
+    cookies: z.object({}).strict()
 });
 
 const logOutSchema = z.object({
     body: z.object({}).strict(),
     params: z.object({}).strict(),
-    query: z.object({}).strict()
+    query: z.object({}).strict(),
+    cookies: z.object({}).strict()
 });
 
 

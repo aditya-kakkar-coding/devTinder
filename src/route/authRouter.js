@@ -5,9 +5,10 @@ const { signUpSchema, logInSchema, logOutSchema } = require("../validation/auth_
 
 const authRouter = express.Router()
 
-authRouter.post("/signup", signUp)
+authRouter.post("/signup", validate(signUpSchema), signUp)
 authRouter.post("/signin", validate(logInSchema), logIn)
 authRouter.get("/logout", validate(logOutSchema), logOut)
+
 module.exports = { authRouter }
 
 //validate(signUpSchema)
