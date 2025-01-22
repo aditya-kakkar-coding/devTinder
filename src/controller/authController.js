@@ -33,6 +33,9 @@ const logIn = async function(req,res){
 
 const logOut = function(req,res){
    //logic 
-    res.status(200).send("User has been created!!")
+    res.cookie("token", null ,{
+        expires: new Date(Date.now())
+    })
+    res.status(200).send("User has been logged out !!")
 }
 module.exports = { signUp, logIn, logOut }

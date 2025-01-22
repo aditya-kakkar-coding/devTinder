@@ -6,6 +6,6 @@ const {verifytoken} = require("../middleware/authMiddleware")
 
 const userRouter = express.Router()
 
-userRouter.post("/userdetails",validate(userDetailsSchema),verifytoken, userDetails)
+userRouter.get("/userdetails",validate(userDetailsSchema),verifytoken, userDetails)
 
 module.exports = { userRouter }

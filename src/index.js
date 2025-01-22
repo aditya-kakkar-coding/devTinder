@@ -18,6 +18,10 @@ app.use("/health",(req,res)=>{
     res.send("Backend is working")
 })
 
+app.use("/",(req,res)=>{
+    res.send("This page is 404 ( page not found )")
+})
+
 dbConnect().then(()=>{
     app.listen(process.env.PORT,()=>{
         console.log(`Backend is running on port ${process.env.PORT}`)

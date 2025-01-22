@@ -7,7 +7,7 @@ const authRouter = express.Router()
 
 authRouter.post("/signup", validate(signUpSchema), signUp)
 authRouter.post("/signin", validate(logInSchema), logIn)
-authRouter.get("/logout", validate(logOutSchema), logOut)
+authRouter.post("/logout", validate(logOutSchema), logOut)
 
 module.exports = { authRouter }
 

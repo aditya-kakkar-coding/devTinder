@@ -34,7 +34,7 @@ const logOutSchema = z.object({
     body: z.object({}).strict(),
     params: z.object({}).strict(),
     query: z.object({}).strict(),
-    cookies: z.object({}).strict()
+    cookies: z.object({token: z.string().max(400).optional()})
 });
 
 
